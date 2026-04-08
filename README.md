@@ -39,3 +39,7 @@ pip install -r requirements.txt
 cp .env.example .env
 python manage.py migrate
 python manage.py runserver
+
+
+## ⏱️ Time Spent
+Approximately 8 hours (including development, debugging, and testing)
