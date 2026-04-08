@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-1: #f6f7fb;
+            --bg-2: #e6ecff;
+            --ink: #141826;
+            --muted: #65708a;
+            --primary: #1f5eff;
+            --primary-soft: #e8efff;
+            --success-soft: #ddf7ea;
+            --panel: rgba(255, 255, 255, 0.85);
+            --shadow: 0 18px 45px rgba(20, 24, 38, 0.08);
+        }
+
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 5% 10%, #ffffff 0%, transparent 35%),
+                radial-gradient(circle at 95% 5%, #dde7ff 0%, transparent 35%),
+                linear-gradient(160deg, var(--bg-1), var(--bg-2));
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #121826, #202f56) !important;
+            box-shadow: 0 10px 30px rgba(18, 24, 38, 0.35);
+        }
+
+        .brand-chip {
+            letter-spacing: 0.3px;
+            font-weight: 700;
+        }
+
+        .hero {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero h1 {
+            font-size: clamp(1.45rem, 3vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.2px;
+        }
+
+        .product-card {
+            border-radius: 18px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid rgba(31, 94, 255, 0.12);
+            background: rgba(255, 255, 255, 0.92);
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(31, 94, 255, 0.15);
+        }
+
+        .product-name {
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .price-pill {
+            display: inline-block;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            margin: 8px 0 14px;
+        }
+
+        .qty-label {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-control.qty-input {
+            border-radius: 12px;
+            border-color: #dbe2f6;
+            min-height: 45px;
+            font-weight: 600;
+        }
+
+        .form-control.qty-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(31, 94, 255, 0.18);
+            border-color: rgba(31, 94, 255, 0.45);
+        }
+
+        .buy-btn {
+            border-radius: 14px;
+            padding: 0.8rem 2.2rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            background: linear-gradient(135deg, #1f5eff, #3e78ff);
+            border: 0;
+            box-shadow: 0 12px 26px rgba(31, 94, 255, 0.3);
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 15px 28px rgba(31, 94, 255, 0.35);
+        }
+
+        .order-box {
+            background: var(--panel);
+            border: 1px solid rgba(19, 28, 58, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 24px rgba(20, 24, 38, 0.06);
+        }
+
+        .order-meta {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .order-box ul {
+            margin-bottom: 0;
+            padding-left: 1.1rem;
+        }
+
+        .order-box li {
+            margin-bottom: 4px;
+        }
+
+        .orders-header {
+            margin-top: 2.4rem;
+        }
+
+        .toast {
+            border-radius: 12px;
+            box-shadow: 0 12px 28px rgba(20, 24, 38, 0.2);
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .hero {
+                padding: 20px;
+                border-radius: 18px;
+            }
+
+            .buy-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔷 Header -->
+<nav class="navbar navbar-dark">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1 brand-chip">🛍️ My Store</span>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="hero mb-4">
+        <h1>Fresh Picks For Your Cart</h1>
+        <p>Choose quantities and checkout securely with Stripe in just a few clicks.</p>
+    </div>
+
+    <!-- 🛒 Products Section -->
+    <h2 class="section-title text-center">Products</h2>
+
+    <form id="checkout-form">
+         {% csrf_token %}
+        <div class="row">
+
+            {% for p in products %}
+                
+            <div class="col-md-4 mb-4">
+                <div class="product-card shadow-sm p-3">
+                    <h5 class="product-name">{{ p.name }}</h5>
+                    <span class="price-pill">₹{{ p.display_price|floatformat:2 }}</span>
+
+                    <label class="qty-label">Quantity</label>
+                    <input type="number" 
+                           name="qty_{{ p.id }}" 
+                           class="form-control qty-input" 
+                           min="0" 
+                           value="0">
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="text-center mt-3">
+            <button class="btn btn-success btn-lg px-5 buy-btn">
+                💳 Buy Now
+            </button>
+        </div>
+    </form>
+
+    <!-- 📦 Orders Section -->
+    <h2 class="section-title orders-header">My Orders</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-box">
+                <strong>Order #{{ order.id }}</strong><br>
+                <small class="order-meta">{{ order.created_at }}</small>
+
+                <ul class="mt-2">
+                    {% for item in order.items.all %}
+                        <li>{{ item.product_name }} × {{ item.quantity }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No orders yet.</p>
+    {% endif %}
+
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="app-toast" class="toast align-items-center text-bg-dark border-0" role="status" aria-live="polite" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="app-toast-body"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Stripe -->
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
+const toastEl = document.getElementById("app-toast");
+const toastBody = document.getElementById("app-toast-body");
+const toastInstance = new bootstrap.Toast(toastEl, { delay: 3200 });
+
+function showToast(message, type = "dark") {
+    toastEl.className = "toast align-items-center border-0 text-bg-" + type;
+    toastBody.textContent = message;
+    toastInstance.show();
+}
+
+{% if payment_success %}
+showToast("Order placed successfully!", "success");
+{% endif %}
+
+document.getElementById("checkout-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = this;
+    const qtyInputs = form.querySelectorAll('input[name^="qty_"]');
+    const hasAtLeastOneQty = Array.from(qtyInputs).some(input => Number(input.value) > 0);
+
+    if (!hasAtLeastOneQty) {
+        showToast("Please select at least one product quantity.", "warning");
+        return;
+    }
+
+    fetch("/create-checkout-session/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: new FormData(form)
+    })
+    .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+            throw new Error(data.error || "Unable to start checkout.");
+        }
+        return data;
+    })
+    .then(data => {
+        stripe.redirectToCheckout({ sessionId: data.id });
+    })
+    .catch(err => {
+        showToast(err.message, "danger");
+    });
+});
+</script>
+
+</body>
+</html>
